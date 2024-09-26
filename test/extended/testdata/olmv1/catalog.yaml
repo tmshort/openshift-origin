@@ -1,0 +1,11 @@
+apiVersion: olm.operatorframework.io/v1alpha1
+kind: ClusterCatalog
+metadata:
+  name: catalog-test
+spec:
+  priority: 0
+  source:
+    type: Image
+    image:
+      pollInterval: 24h
+      ref: quay.io/operatorframework/catalog-test:latest
