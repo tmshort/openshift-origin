@@ -1657,6 +1657,12 @@ var Annotations = map[string]string{
 
 	"[sig-node][apigroup:config.openshift.io] CPU Partitioning node validation should have correct cpuset and cpushare set in crio containers": " [Suite:openshift/conformance/parallel]",
 
+	"[sig-olmv1] OLMv1 CRDs should be installed": " [Suite:openshift/conformance/parallel]",
+
+	"[sig-olmv1] OLMv1 operator installation should create a catalog": " [Suite:openshift/conformance/parallel]",
+
+	"[sig-olmv1] OLMv1 should have access to certain files checks the manager containers for those files": " [Suite:openshift/conformance/parallel]",
+
 	"[sig-operator] OLM should Implement packages API server and list packagemanifest info with namespace not NULL [apigroup:packages.operators.coreos.com]": " [Skipped:NoOptionalCapabilities] [Suite:openshift/conformance/parallel]",
 
 	"[sig-operator] OLM should be installed with catalogsources at version v1alpha1 [apigroup:operators.coreos.com]": " [Skipped:NoOptionalCapabilities] [Suite:openshift/conformance/parallel]",

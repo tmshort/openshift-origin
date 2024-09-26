@@ -438,6 +438,12 @@
 // test/extended/testdata/oauthserver/oauth-sa.yaml
 // test/extended/testdata/olm/operatorgroup.yaml
 // test/extended/testdata/olm/subscription.yaml
+// test/extended/testdata/olmv1/catalog/Dockerfile
+// test/extended/testdata/olmv1/catalog/configs/.indexignore
+// test/extended/testdata/olmv1/catalog/configs/index.yaml
+// test/extended/testdata/olmv1/catalog-build-config.json
+// test/extended/testdata/olmv1/catalog-image-stream.json
+// test/extended/testdata/olmv1/catalog.yaml
 // test/extended/testdata/poddisruptionbudgets/always-allow-policy-pdb.yaml
 // test/extended/testdata/poddisruptionbudgets/if-healthy-budget-policy-pdb.yaml
 // test/extended/testdata/poddisruptionbudgets/nginx-with-delayed-ready-deployment.yaml
@@ -50023,6 +50029,201 @@ func testExtendedTestdataOlmSubscriptionYaml() (*asset, error) {
 	return a, nil
 }
 
+var _testExtendedTestdataOlmv1CatalogDockerfile = []byte(`FROM scratch
+ADD configs /configs
+LABEL operators.operatorframework.io.index.configs.v1=/configs
+`)
+
+func testExtendedTestdataOlmv1CatalogDockerfileBytes() ([]byte, error) {
+	return _testExtendedTestdataOlmv1CatalogDockerfile, nil
+}
+
+func testExtendedTestdataOlmv1CatalogDockerfile() (*asset, error) {
+	bytes, err := testExtendedTestdataOlmv1CatalogDockerfileBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "test/extended/testdata/olmv1/catalog/Dockerfile", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
+var _testExtendedTestdataOlmv1CatalogConfigsIndexignore = []byte(`..*
+`)
+
+func testExtendedTestdataOlmv1CatalogConfigsIndexignoreBytes() ([]byte, error) {
+	return _testExtendedTestdataOlmv1CatalogConfigsIndexignore, nil
+}
+
+func testExtendedTestdataOlmv1CatalogConfigsIndexignore() (*asset, error) {
+	bytes, err := testExtendedTestdataOlmv1CatalogConfigsIndexignoreBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "test/extended/testdata/olmv1/catalog/configs/.indexignore", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
+var _testExtendedTestdataOlmv1CatalogConfigsIndexYaml = []byte(`{
+  "schema": "olm.package",
+  "name": "registry-operator"
+}
+{
+  "schema": "olm.bundle",
+  "name": "registry-operator.v0.0.1",
+  "package": "registry-operator",
+  "image": "docker-registry.operator-controller-e2e.svc:5000/bundles/registry-v1/registry-bundle:v0.0.1",
+  "properties": [
+    {
+      "type": "olm.package",
+      "value": {
+        "packageName": "registry-operator",
+        "version": "0.0.1"
+      }
+    }
+  ]
+}
+{
+  "schema": "olm.channel",
+  "name": "preview",
+  "package": "registry-operator",
+  "entries": [
+    {
+      "name": "registry-operator.v0.0.1"
+    }
+  ]
+}
+`)
+
+func testExtendedTestdataOlmv1CatalogConfigsIndexYamlBytes() ([]byte, error) {
+	return _testExtendedTestdataOlmv1CatalogConfigsIndexYaml, nil
+}
+
+func testExtendedTestdataOlmv1CatalogConfigsIndexYaml() (*asset, error) {
+	bytes, err := testExtendedTestdataOlmv1CatalogConfigsIndexYamlBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "test/extended/testdata/olmv1/catalog/configs/index.yaml", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
+var _testExtendedTestdataOlmv1CatalogBuildConfigJson = []byte(`{
+  "kind": "BuildConfig",
+  "apiVersion": "build.openshift.io/v1",
+  "metadata": {
+    "name": "catalog-test",
+    "labels": {
+      "name": "catalog-test"
+    }
+  },
+  "spec": {
+    "triggers": [],
+    "source": {
+      "type": "Binary",
+      "binary": {}
+    },
+    "strategy": {
+      "type": "Docker",
+      "dockerStrategy": {
+        "forcePull": true,
+        "from": {
+          "kind": "DockerImage",
+          "name": "scratch"
+        },
+        "env": [
+          {
+            "name": "BUILD_LOGLEVEL",
+            "value": "5"
+          }
+        ]
+      }
+    },
+    "output": {
+      "to": {
+        "kind": "ImageStreamTag",
+        "name": "catalog-test:latest"
+      }
+    }
+  }
+}
+`)
+
+func testExtendedTestdataOlmv1CatalogBuildConfigJsonBytes() ([]byte, error) {
+	return _testExtendedTestdataOlmv1CatalogBuildConfigJson, nil
+}
+
+func testExtendedTestdataOlmv1CatalogBuildConfigJson() (*asset, error) {
+	bytes, err := testExtendedTestdataOlmv1CatalogBuildConfigJsonBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "test/extended/testdata/olmv1/catalog-build-config.json", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
+var _testExtendedTestdataOlmv1CatalogImageStreamJson = []byte(`{
+  "kind": "ImageStream",
+  "apiVersion": "image.openshift.io/v1",
+  "metadata": {
+    "name": "catalog-test",
+    "labels": {
+      "name": "catalog-test"
+    }
+  }
+}
+`)
+
+func testExtendedTestdataOlmv1CatalogImageStreamJsonBytes() ([]byte, error) {
+	return _testExtendedTestdataOlmv1CatalogImageStreamJson, nil
+}
+
+func testExtendedTestdataOlmv1CatalogImageStreamJson() (*asset, error) {
+	bytes, err := testExtendedTestdataOlmv1CatalogImageStreamJsonBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "test/extended/testdata/olmv1/catalog-image-stream.json", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
+var _testExtendedTestdataOlmv1CatalogYaml = []byte(`apiVersion: olm.operatorframework.io/v1alpha1
+kind: ClusterCatalog
+metadata:
+  name: catalog-test
+spec:
+  priority: 0
+  source:
+    type: Image
+    image:
+      pollInterval: 24h
+      ref: quay.io/operatorframework/catalog-test:latest
+`)
+
+func testExtendedTestdataOlmv1CatalogYamlBytes() ([]byte, error) {
+	return _testExtendedTestdataOlmv1CatalogYaml, nil
+}
+
+func testExtendedTestdataOlmv1CatalogYaml() (*asset, error) {
+	bytes, err := testExtendedTestdataOlmv1CatalogYamlBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "test/extended/testdata/olmv1/catalog.yaml", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
 var _testExtendedTestdataPoddisruptionbudgetsAlwaysAllowPolicyPdbYaml = []byte(`---
 apiVersion: policy/v1
 kind: PodDisruptionBudget
@@ -55592,6 +55793,12 @@ var _bindata = map[string]func() (*asset, error){
 	"test/extended/testdata/oauthserver/oauth-sa.yaml":                                                       testExtendedTestdataOauthserverOauthSaYaml,
 	"test/extended/testdata/olm/operatorgroup.yaml":                                                          testExtendedTestdataOlmOperatorgroupYaml,
 	"test/extended/testdata/olm/subscription.yaml":                                                           testExtendedTestdataOlmSubscriptionYaml,
+	"test/extended/testdata/olmv1/catalog/Dockerfile":                                                        testExtendedTestdataOlmv1CatalogDockerfile,
+	"test/extended/testdata/olmv1/catalog/configs/.indexignore":                                              testExtendedTestdataOlmv1CatalogConfigsIndexignore,
+	"test/extended/testdata/olmv1/catalog/configs/index.yaml":                                                testExtendedTestdataOlmv1CatalogConfigsIndexYaml,
+	"test/extended/testdata/olmv1/catalog-build-config.json":                                                 testExtendedTestdataOlmv1CatalogBuildConfigJson,
+	"test/extended/testdata/olmv1/catalog-image-stream.json":                                                 testExtendedTestdataOlmv1CatalogImageStreamJson,
+	"test/extended/testdata/olmv1/catalog.yaml":                                                              testExtendedTestdataOlmv1CatalogYaml,
 	"test/extended/testdata/poddisruptionbudgets/always-allow-policy-pdb.yaml":                               testExtendedTestdataPoddisruptionbudgetsAlwaysAllowPolicyPdbYaml,
 	"test/extended/testdata/poddisruptionbudgets/if-healthy-budget-policy-pdb.yaml":                          testExtendedTestdataPoddisruptionbudgetsIfHealthyBudgetPolicyPdbYaml,
 	"test/extended/testdata/poddisruptionbudgets/nginx-with-delayed-ready-deployment.yaml":                   testExtendedTestdataPoddisruptionbudgetsNginxWithDelayedReadyDeploymentYaml,
@@ -56349,6 +56556,18 @@ var _bintree = &bintree{nil, map[string]*bintree{
 				"olm": {nil, map[string]*bintree{
 					"operatorgroup.yaml": {testExtendedTestdataOlmOperatorgroupYaml, map[string]*bintree{}},
 					"subscription.yaml":  {testExtendedTestdataOlmSubscriptionYaml, map[string]*bintree{}},
+				}},
+				"olmv1": {nil, map[string]*bintree{
+					"catalog": {nil, map[string]*bintree{
+						"Dockerfile": {testExtendedTestdataOlmv1CatalogDockerfile, map[string]*bintree{}},
+						"configs": {nil, map[string]*bintree{
+							".indexignore": {testExtendedTestdataOlmv1CatalogConfigsIndexignore, map[string]*bintree{}},
+							"index.yaml":   {testExtendedTestdataOlmv1CatalogConfigsIndexYaml, map[string]*bintree{}},
+						}},
+					}},
+					"catalog-build-config.json": {testExtendedTestdataOlmv1CatalogBuildConfigJson, map[string]*bintree{}},
+					"catalog-image-stream.json": {testExtendedTestdataOlmv1CatalogImageStreamJson, map[string]*bintree{}},
+					"catalog.yaml":              {testExtendedTestdataOlmv1CatalogYaml, map[string]*bintree{}},
 				}},
 				"poddisruptionbudgets": {nil, map[string]*bintree{
 					"always-allow-policy-pdb.yaml":             {testExtendedTestdataPoddisruptionbudgetsAlwaysAllowPolicyPdbYaml, map[string]*bintree{}},
