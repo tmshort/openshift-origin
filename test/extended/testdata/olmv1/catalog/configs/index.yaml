@@ -1,0 +1,29 @@
+{
+  "schema": "olm.package",
+  "name": "registry-operator"
+}
+{
+  "schema": "olm.bundle",
+  "name": "registry-operator.v0.0.1",
+  "package": "registry-operator",
+  "image": "docker-registry.operator-controller-e2e.svc:5000/bundles/registry-v1/registry-bundle:v0.0.1",
+  "properties": [
+    {
+      "type": "olm.package",
+      "value": {
+        "packageName": "registry-operator",
+        "version": "0.0.1"
+      }
+    }
+  ]
+}
+{
+  "schema": "olm.channel",
+  "name": "preview",
+  "package": "registry-operator",
+  "entries": [
+    {
+      "name": "registry-operator.v0.0.1"
+    }
+  ]
+}
