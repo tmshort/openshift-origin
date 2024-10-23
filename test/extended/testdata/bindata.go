@@ -50234,7 +50234,7 @@ spec:
     type: Image
     image:
       pollInterval: 24h
-      ref: quay.io/operatorframework/catalog-test:latest
+      ref: example.com/simple-fbc/catalog-test:latest
 `)
 
 func testExtendedTestdataOlmv1CatalogYamlBytes() ([]byte, error) {

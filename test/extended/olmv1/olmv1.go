@@ -120,8 +120,7 @@ var _ = g.Describe("[sig-olmv1] OLMv1 operator installation", func() {
 		if g.CurrentSpecReport().Failed() {
 			exutil.DumpPodLogsStartingWith("", oc)
 		}
-		oc.AdminConfigClient().ConfigV1().ImageTagMirrorSets().Delete(context.Background(), "catalog-test", metav1.DeleteOptions{})
-		oc.AsAdmin().WithoutNamespace().Run("delete").Args("-f", clusterCatalogFile).Execute()
+		//oc.AsAdmin().WithoutNamespace().Run("delete").Args("clustercatalogs.olm.operatorframework.io", "catalog-test").Execute()
 		oc.AsAdmin().Run("delete").Args("-f", buildConfigFile).Execute()
 		oc.AsAdmin().Run("delete").Args("-f", imageStreamFile).Execute()
 
@@ -155,13 +154,12 @@ var _ = g.Describe("[sig-olmv1] OLMv1 operator installation", func() {
 		imageLocation := imageRegex.FindString(logs)
 		g.GinkgoWriter.Printf("IMAGE NAME: %q\n", imageLocation)
 
-		g.By("creating an ITMS")
-		itms := newImageTagMirrorSet(imageLocation)
-		_, err = oc.AdminConfigClient().ConfigV1().ImageTagMirrorSets().Create(context.Background(), itms, metav1.CreateOptions{})
-		o.Expect(err).NotTo(o.HaveOccurred())
-
 		g.By("creating the ClusterCatalog")
 		err = oc.AsAdmin().WithoutNamespace().Run("create").Args("-f", clusterCatalogFile).Execute()
+		o.Expect(err).NotTo(o.HaveOccurred())
+
+		g.By("patching the ClusterCatalog with image from internal registry")
+		err = oc.AsAdmin().WithoutNamespace().Run("patch").Args("clustercatalogs.olm.operatorframework.io", "catalog-test", "--type=merge", "-p", fmt.Sprintf(`{"spec": {"source": {"image": {"ref": "%s:latest"}}}}`, imageLocation)).Execute()
 		o.Expect(err).NotTo(o.HaveOccurred())
 
 		g.By("waiting for the ClusterCatalog to be serving")
@@ -200,25 +198,6 @@ var _ = g.Describe("[sig-olmv1] OLMv1 operator installation", func() {
 		//    type: Progressing
 	})
 })
-
-func newImageTagMirrorSet(image string) *configv1.ImageTagMirrorSet {
-	return &configv1.ImageTagMirrorSet{
-		ObjectMeta: metav1.ObjectMeta{
-			Name: "catalog-test",
-		},
-		Spec: configv1.ImageTagMirrorSetSpec{
-			ImageTagMirrors: []configv1.ImageTagMirrors{
-				{
-					MirrorSourcePolicy: configv1.NeverContactSource,
-					Source:             "quay.io/operatorframework/catalog-test",
-					Mirrors: []configv1.ImageMirror{
-						configv1.ImageMirror(image),
-					},
-				},
-			},
-		},
-	}
-}
 
 var _ = g.Describe("[sig-olmv1] OLMv1 should have access to certain files", func() {
 	defer g.GinkgoRecover()
