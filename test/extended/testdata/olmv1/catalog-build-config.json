@@ -1,0 +1,39 @@
+{
+  "kind": "BuildConfig",
+  "apiVersion": "build.openshift.io/v1",
+  "metadata": {
+    "name": "catalog-test",
+    "labels": {
+      "name": "catalog-test"
+    }
+  },
+  "spec": {
+    "triggers": [],
+    "source": {
+      "type": "Binary",
+      "binary": {}
+    },
+    "strategy": {
+      "type": "Docker",
+      "dockerStrategy": {
+        "forcePull": true,
+        "from": {
+          "kind": "DockerImage",
+          "name": "scratch"
+        },
+        "env": [
+          {
+            "name": "BUILD_LOGLEVEL",
+            "value": "5"
+          }
+        ]
+      }
+    },
+    "output": {
+      "to": {
+        "kind": "ImageStreamTag",
+        "name": "catalog-test:latest"
+      }
+    }
+  }
+}

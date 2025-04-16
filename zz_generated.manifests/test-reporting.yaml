@@ -455,6 +455,8 @@ spec:
         installation should fail to install a non-existing cluster extension'
     - testName: '[sig-olmv1][OCPFeatureGate:NewOLM][Skipped:Disconnected] OLMv1 operator
         installation should install a cluster extension'
+    - testName: '[sig-olmv2][OCPFeatureGate:NewOLM] OLMv1 local operator installation
+        should create a catalog'
   - featureGate: NewOLMCatalogdAPIV1Metas
     tests:
     - testName: '[sig-olmv1][OCPFeatureGate:NewOLMCatalogdAPIV1Metas][Skipped:Disconnected]
