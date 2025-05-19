@@ -50,22 +50,26 @@ var _ = g.Describe("[sig-olmv2][OCPFeatureGate:NewOLM] OLMv1 local operator inst
 		}
 
 		g.By("adding image-pull permissions to catalogd")
-		err = oc.AsAdmin().Run("adm").
-			Args("policy", "add-cluster-role-to-group", "system:image-puller",
-				"system:serviceaccounts:openshift-catalogd").Execute()
+		//err = oc.AsAdmin().Run("adm").
+		//	Args("policy", "add-cluster-role-to-group", "system:image-puller",
+		//		"system:serviceaccounts:openshift-catalogd").Execute()
 		//err = oc.AsAdmin().WithoutNamespace().Run("adm").
 		//	Args("policy", "-n", "openshift-catalogd", "add-cluster-role-to-group", "system:image-puller",
 		//		"system:serviceaccounts:openshift-catalogd").Execute()
+		//err = oc.AsAdmin().WithoutNamespace().Run("adm").
+		//	Args("policy", "-n", "openshift-catalogd", "add-cluster-role-to-user", "system:image-puller",
+		//		"-z", "catalogd-controller-manager").Execute()
+		//o.Expect(err).NotTo(o.HaveOccurred())
+		//err = oc.AsAdmin().WithoutNamespace().Run("adm").
+		//	Args("policy", "-n", "openshift-catalogd", "add-cluster-role-to-user", "system:image-pusher",
+		//		"-z", "catalogd-controller-manager").Execute()
+		//o.Expect(err).NotTo(o.HaveOccurred())
+		//err = oc.AsAdmin().WithoutNamespace().Run("adm").
+		//	Args("policy", "-n", "openshift-catalogd", "add-cluster-role-to-user", "system:image-builder",
+		//		"-z", "catalogd-controller-manager").Execute()
+		//o.Expect(err).NotTo(o.HaveOccurred())
 		err = oc.AsAdmin().WithoutNamespace().Run("adm").
-			Args("policy", "-n", "openshift-catalogd", "add-cluster-role-to-user", "system:image-puller",
-				"-z", "catalogd-controller-manager").Execute()
-		o.Expect(err).NotTo(o.HaveOccurred())
-		err = oc.AsAdmin().WithoutNamespace().Run("adm").
-			Args("policy", "-n", "openshift-catalogd", "add-cluster-role-to-user", "system:image-pusher",
-				"-z", "catalogd-controller-manager").Execute()
-		o.Expect(err).NotTo(o.HaveOccurred())
-		err = oc.AsAdmin().WithoutNamespace().Run("adm").
-			Args("policy", "-n", "openshift-catalogd", "add-cluster-role-to-user", "system:image-builder",
+			Args("policy", "-n", "openshift-catalogd", "add-cluster-role-to-user", "cluster-admin",
 				"-z", "catalogd-controller-manager").Execute()
 		o.Expect(err).NotTo(o.HaveOccurred())
 	})
@@ -125,7 +129,7 @@ var _ = g.Describe("[sig-olmv2][OCPFeatureGate:NewOLM] OLMv1 local operator inst
 		//g.DeferCleanup(cleanup)
 
 		g.By("waiting for the ClusterCatalog to be serving")
-		err = wait.PollUntilContextTimeout(context.Background(), time.Second, 5*time.Minute, true, func(ctx context.Context) (done bool, err error) {
+		err = wait.PollUntilContextTimeout(context.Background(), 15*time.Second, 5*time.Minute, true, func(ctx context.Context) (done bool, err error) {
 			var conditions []metav1.Condition
 			output, err := oc.AsAdmin().WithoutNamespace().Run("get").Args("clustercatalogs.olm.operatorframework.io", "catalog-test", "-o=jsonpath={.status.conditions}").Output()
 			if err != nil {
